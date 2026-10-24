@@ -1,0 +1,12 @@
+# Binaires créés par go build
+*.exe
+groupie
+
+# Éditeurs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
