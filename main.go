@@ -1,40 +1,46 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	"encoding/json"
 )
 
-type Artist struct {
-	ID           int      `json:"id"`
-	Name         string   `json:"name"`
-	Image        string   `json:"image"`
-	CreationDate int      `json:"creationDate"`
-	Members      []string `json:"members"`
+type Pokemon struct {
+	ID   int
+	Name string `json:"name"`
 }
 
-func getArtists() []Artist {
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+type ListePokemon struct {
+	Results []Pokemon `json:"results"`
+}
+
+func getPokemons() []Pokemon {
+	resp, err := http.Get("https://pokeapi.co/api/v2/pokemon?limit=151")
 	if err != nil {
 		fmt.Println("Erreur :", err)
 		return nil
 	}
 	defer resp.Body.Close()
 
-	var artists []Artist
-	json.NewDecoder(resp.Body).Decode(&artists)
-	return artists
+	var liste ListePokemon
+	json.NewDecoder(resp.Body).Decode(&liste)
+
+	for i := range liste.Results {
+		liste.Results[i].ID = i + 1
+	}
+	return liste.Results
 }
 
 func accueil(w http.ResponseWriter, r *http.Request) {
-	artists := getArtists()
+	pokemons := getPokemons()
 
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	tmpl.Execute(w, artists)
+	tmpl.Execute(w, pokemons)
 }
+
 func main() {
 	http.HandleFunc("/", accueil)
 	http.Handle("/static/", http.FileServer(http.Dir(".")))

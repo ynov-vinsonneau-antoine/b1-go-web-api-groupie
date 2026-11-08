@@ -1,3 +1,3 @@
-module groupie
+module pokedex
 
 go 1.22.0

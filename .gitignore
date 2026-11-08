@@ -1,6 +1,6 @@
 # Binaires créés par go build
 *.exe
-groupie
+pokedex
 
 # Éditeurs
 .vscode/

@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-   <meta charset="UTF-8">
-  <title>Groupie Tracker</title>
+  <meta charset="UTF-8">
+  <title>Pokédex</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>Groupie Tracker</h1>
+  <h1>Pokédex</h1>
 
   <div class="grille">
     {{range .}}
       <div class="carte">
-        <img src="{{.Image}}" alt="{{.Name}}">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{.ID}}.png" alt="{{.Name}}">
+        <p>n° {{.ID}}</p>
         <h2>{{.Name}}</h2>
-        <p>Créé en {{.CreationDate}}</p>
-        <p>{{len .Members}} membres</p>
       </div>
     {{end}}
   </div>
